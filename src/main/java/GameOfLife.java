@@ -23,7 +23,10 @@ public class GameOfLife {
   }
 
   void seed(ArrayList<CellCoordinates> cellCoordinates) {
-    cellCoordinates.forEach(null);
+    cellCoordinates.forEach((CellCoordinates coordinates) -> {
+      ArrayList<Cell> column = universe.get(coordinates.x);
+      column.set(coordinates.y, new AliveCell());
+    });
   }
 
   Cell get(CellCoordinates cellCoordinates) {
