@@ -24,8 +24,15 @@ public class GameOfLife {
 
   void seed(ArrayList<CellCoordinates> cellCoordinates) {
     cellCoordinates.forEach((CellCoordinates coordinates) -> {
-      ArrayList<Cell> column = universe.get(coordinates.x);
-      column.set(coordinates.y, new AliveCell());
+      Integer x = coordinates.x;
+      Integer y = coordinates.y;
+      Boolean xWithinBounds = x >= 0 && x <= this.numColumns;
+      Boolean yWithinBounds = y >= 0 && y <= this.numRows;
+
+      if (xWithinBounds && yWithinBounds) {
+        ArrayList<Cell> column = universe.get(x);
+        column.set(y, new AliveCell());
+      }
     });
   }
 
