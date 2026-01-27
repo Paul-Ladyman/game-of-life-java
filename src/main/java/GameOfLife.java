@@ -1,7 +1,5 @@
 
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 public class GameOfLife {
   private final Integer numColumns;
@@ -12,29 +10,27 @@ public class GameOfLife {
     this.numColumns = numColumns;
     this.numRows = numRows;
 
-    ArrayList<Cell> column = new ArrayList<Cell>();
-    for(Integer y = 0; y < numRows; y++) {
-      column.add(new DeadCell());
-    }
-
     for(Integer x = 0; x < numColumns; x++) {
+      ArrayList<Cell> column = new ArrayList<Cell>();
+      for(Integer y = 0; y < numRows; y++) {
+        column.add(new DeadCell(new CellCoordinates(x, y)));
+      }
       this.universe.add(column);
     }
   }
 
-  void seed(ArrayList<CellCoordinates> cellCoordinates) {
-    cellCoordinates.forEach((CellCoordinates coordinates) -> {
-      Integer x = coordinates.x;
-      Integer y = coordinates.y;
-      Boolean xWithinBounds = x >= 0 && x <= this.numColumns;
-      Boolean yWithinBounds = y >= 0 && y <= this.numRows;
-
-      if (xWithinBounds && yWithinBounds) {
-        ArrayList<Cell> column = universe.get(x);
-        column.set(y, new AliveCell());
+  void seed(ArrayList<CellCoordinates> seedCoordinates) {
+    for(Integer x = 0; x < this.numColumns; x++) {
+      ArrayList<Cell> column = this.universe.get(x);
+      for(Integer y = 0; y < this.numRows; y++) {
+        CellCoordinates cellCoordinates = column.get(y).getCoordinates();
+        Boolean isSeedCell = seedCoordinates.stream().anyMatch(coordinates -> coordinates.x == cellCoordinates.x && coordinates.y == cellCoordinates.y);
+        if (isSeedCell) column.set(y, new AliveCell());
       }
-    });
+    }
   }
+
+  void nextGeneration() {}
 
   Cell get(CellCoordinates cellCoordinates) {
     return universe.get(cellCoordinates.x).get(cellCoordinates.y);

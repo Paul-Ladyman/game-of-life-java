@@ -5,5 +5,11 @@ public class AliveCell implements Cell {
     // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Unimplemented method 'nextGeneration'");
   }
+
+  @Override
+  public CellCoordinates getCoordinates() {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'getCoordinates'");
+  }
   
 }

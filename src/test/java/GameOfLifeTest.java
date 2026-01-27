@@ -59,4 +59,38 @@ class GameOfLifeTest {
     assertInstanceOf(DeadCell.class, cell10);
     assertInstanceOf(DeadCell.class, cell11);
   }
+
+  @Test
+  void nextGenerationMutatesCellsAccordingToTheGameOfLife() {
+    GameOfLife gol = new GameOfLife(5, 5);
+    ArrayList<CellCoordinates> gliderCoordinates = new ArrayList<CellCoordinates>();
+    gliderCoordinates.add(new CellCoordinates(2, 1));
+    gliderCoordinates.add(new CellCoordinates(3, 2));
+    gliderCoordinates.add(new CellCoordinates(1, 3));
+    gliderCoordinates.add(new CellCoordinates(2, 3));
+    gliderCoordinates.add(new CellCoordinates(3, 3));
+    gol.seed(gliderCoordinates);
+    gol.nextGeneration();
+
+    ArrayList<CellCoordinates> nextGenerationCoordinates = new ArrayList<CellCoordinates>();
+    nextGenerationCoordinates.add(new CellCoordinates(1, 2));
+    nextGenerationCoordinates.add(new CellCoordinates(3, 2));
+    nextGenerationCoordinates.add(new CellCoordinates(2, 3));
+    nextGenerationCoordinates.add(new CellCoordinates(3, 3));
+    nextGenerationCoordinates.add(new CellCoordinates(2, 4));
+
+    for(Integer x = 0; x < 5; x++) {
+      for(Integer y = 0; y < 5; y++) {
+        CellCoordinates coordinates = new CellCoordinates(x, y);
+        Cell cell = gol.get(coordinates);
+        Boolean isNextGenerationCell = nextGenerationCoordinates.stream().anyMatch(nextCoordinates -> nextCoordinates.x == coordinates.x && nextCoordinates.y == coordinates.y);
+        IO.println(coordinates.x + " " + coordinates.y + " " + isNextGenerationCell);
+        if (isNextGenerationCell) {
+          assertInstanceOf(AliveCell.class, cell);
+        } else {
+          assertInstanceOf(DeadCell.class, cell);
+        }
+      }
+    }
+  }
 }
