@@ -6,4 +6,8 @@ public class CellCoordinates {
     this.x = x;
     this.y = y;
   }
+
+  CellCoordinates translate(Integer deltaX, Integer deltaY) {
+    return new CellCoordinates(this.x + deltaX, this.y + deltaY);
+  }
 }

@@ -84,7 +84,6 @@ class GameOfLifeTest {
         CellCoordinates coordinates = new CellCoordinates(x, y);
         Cell cell = gol.get(coordinates);
         Boolean isNextGenerationCell = nextGenerationCoordinates.stream().anyMatch(nextCoordinates -> nextCoordinates.x == coordinates.x && nextCoordinates.y == coordinates.y);
-        IO.println(coordinates.x + " " + coordinates.y + " " + isNextGenerationCell);
         if (isNextGenerationCell) {
           assertInstanceOf(AliveCell.class, cell);
         } else {
