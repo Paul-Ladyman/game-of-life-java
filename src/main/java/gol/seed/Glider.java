@@ -2,7 +2,7 @@ package gol.seed;
 
 import java.util.ArrayList;
 
-import gol.CellCoordinates;
+import gol.cell.CellCoordinates;
 
 public class Glider extends Seed {
 

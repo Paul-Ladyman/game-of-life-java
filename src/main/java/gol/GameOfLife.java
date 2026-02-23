@@ -2,6 +2,10 @@ package gol;
 
 import java.util.ArrayList;
 
+import gol.cell.AliveCell;
+import gol.cell.Cell;
+import gol.cell.CellCoordinates;
+import gol.cell.DeadCell;
 import gol.seed.Seed;
 
 public class GameOfLife {

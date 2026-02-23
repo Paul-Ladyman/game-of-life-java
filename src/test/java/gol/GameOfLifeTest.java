@@ -1,6 +1,10 @@
 package gol;
 import org.junit.jupiter.api.Test;
 
+import gol.cell.AliveCell;
+import gol.cell.Cell;
+import gol.cell.CellCoordinates;
+import gol.cell.DeadCell;
 import gol.seed.Glider;
 import gol.seed.Seed;
 

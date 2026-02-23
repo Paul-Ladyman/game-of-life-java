@@ -1,4 +1,4 @@
-package gol;
+package gol.cell;
 public class CellCoordinates {
   public final Integer x;
   public final Integer y;
@@ -8,7 +8,7 @@ public class CellCoordinates {
     this.y = y;
   }
 
-  CellCoordinates translate(Integer deltaX, Integer deltaY) {
+  public CellCoordinates translate(Integer deltaX, Integer deltaY) {
     return new CellCoordinates(this.x + deltaX, this.y + deltaY);
   }
 }
