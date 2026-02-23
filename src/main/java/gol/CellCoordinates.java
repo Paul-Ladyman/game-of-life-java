@@ -1,3 +1,4 @@
+package gol;
 public class CellCoordinates {
   public final Integer x;
   public final Integer y;

@@ -1,3 +1,4 @@
+package gol;
 public class AliveCell implements Cell {
   private CellCoordinates coordinates;
 

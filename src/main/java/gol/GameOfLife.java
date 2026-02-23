@@ -1,5 +1,8 @@
+package gol;
 
 import java.util.ArrayList;
+
+import gol.seed.Seed;
 
 public class GameOfLife {
   private final Integer numColumns;
@@ -36,12 +39,16 @@ public class GameOfLife {
     }
   }
 
-  void seed(ArrayList<CellCoordinates> seedCoordinates) {
+  void seed(Seed seed) {
     for(Integer x = 0; x < this.numColumns; x++) {
       ArrayList<Cell> column = this.universe.get(x);
       for(Integer y = 0; y < this.numRows; y++) {
         CellCoordinates cellCoordinates = column.get(y).getCoordinates();
-        Boolean isSeedCell = seedCoordinates.stream().anyMatch(coordinates -> coordinates.x == cellCoordinates.x && coordinates.y == cellCoordinates.y);
+        Boolean isSeedCell = seed.getCoordinates().stream().anyMatch(coordinates -> {
+          Integer seedX = coordinates.x + seed.offsetX;
+          Integer seedY = coordinates.y + seed.offsetY;
+          return seedX  == cellCoordinates.x && seedY == cellCoordinates.y;
+        });
         if (isSeedCell) column.set(y, new AliveCell(cellCoordinates));
       }
     }
