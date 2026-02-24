@@ -9,16 +9,22 @@ public class Printer {
     System.out.print("\033[H\033[2J");
     System.out.flush();
 
-    for(Integer x = 0; x < gol.xLength(); x++) {
-      for(Integer y = 0; y < gol.yLength(); y++) {
+    String rendering = "";
+    for(Integer y = 0; y < gol.yLength(); y++) {
+      for(Integer x = 0; x < gol.xLength(); x++) {
         CellCoordinates coordinates = new CellCoordinates(x, y);
         Cell cell = gol.get(coordinates);
         if (cell.getClass() == AliveCell.class)
-          System.out.print("x");
+          rendering += "0";
+        else if (y == 0 || y == gol.yLength() - 1)
+          rendering += "-";
+        else if (x == 0 || x == gol.xLength() - 1)
+          rendering += "|";
         else
-          System.out.print("o");
+          rendering += " ";
       }
-      System.out.println();
+      rendering += System.lineSeparator();
     }
+    System.out.print(rendering);
   }
 }

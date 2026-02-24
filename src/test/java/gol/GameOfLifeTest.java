@@ -55,6 +55,23 @@ class OriginSeed extends Seed {
 
 class GameOfLifeTest {
 
+  private void assertGeneration(GameOfLife gol, ArrayList<CellCoordinates> nextGenerationCoordinates) {
+    nextGenerationCoordinates.forEach((coordinates) -> {
+      Cell cell = gol.get(coordinates);
+      assertInstanceOf(AliveCell.class, cell);
+    });
+
+    Integer aliveCellCount = 0;
+    for(Integer x = 0; x < gol.xLength(); x++) {
+      for(Integer y = 0; y < gol.yLength(); y++) {
+        CellCoordinates coordinates = new CellCoordinates(x, y);
+        Cell cell = gol.get(coordinates);
+        if (cell.getClass() == AliveCell.class) aliveCellCount++;
+      }
+    }
+    assertEquals(5, aliveCellCount);
+  }
+
   @Test
   void createsAUniverseOfSpecifiedDimensions() {
     GameOfLife gol = new GameOfLife(2, 2);
@@ -132,29 +149,100 @@ class GameOfLifeTest {
   }
 
   @Test
-  void nextGenerationMutatesCellsAccordingToTheGameOfLife() {
+  void nextGenerationGivesGenerationOneOfGlider() {
     GameOfLife gol = new GameOfLife(5, 5);
     gol.seed(new Glider(0, 0));
     gol.nextGeneration();
 
+    /*
+      x x x x x
+      x 0 x x x
+      x x 0 0 x
+      x 0 0 x x
+      x x x x x
+    */
     ArrayList<CellCoordinates> nextGenerationCoordinates = new ArrayList<CellCoordinates>();
-    nextGenerationCoordinates.add(new CellCoordinates(0, 1));
-    nextGenerationCoordinates.add(new CellCoordinates(2, 1));
-    nextGenerationCoordinates.add(new CellCoordinates(1, 2));
+    nextGenerationCoordinates.add(new CellCoordinates(1, 1));
     nextGenerationCoordinates.add(new CellCoordinates(2, 2));
+    nextGenerationCoordinates.add(new CellCoordinates(3, 2));
     nextGenerationCoordinates.add(new CellCoordinates(1, 3));
+    nextGenerationCoordinates.add(new CellCoordinates(2, 3));
 
-    for(Integer x = 0; x < 5; x++) {
-      for(Integer y = 0; y < 5; y++) {
-        CellCoordinates coordinates = new CellCoordinates(x, y);
-        Cell cell = gol.get(coordinates);
-        Boolean isNextGenerationCell = nextGenerationCoordinates.stream().anyMatch(nextCoordinates -> nextCoordinates.x == coordinates.x && nextCoordinates.y == coordinates.y);
-        if (isNextGenerationCell) {
-          assertInstanceOf(AliveCell.class, cell);
-        } else {
-          assertInstanceOf(DeadCell.class, cell);
-        }
-      }
-    }
+    assertGeneration(gol, nextGenerationCoordinates);
+  }
+
+  @Test
+  void nextGenerationGivesGenerationTwoOfGlider() {
+    GameOfLife gol = new GameOfLife(5, 5);
+    gol.seed(new Glider(0, 0));
+    gol.nextGeneration();
+    gol.nextGeneration();
+
+    /*
+      x x x x x
+      x x 0 x x
+      x x x 0 x
+      x 0 0 0 x
+      x x x x x
+    */
+    ArrayList<CellCoordinates> nextGenerationCoordinates = new ArrayList<CellCoordinates>();
+    nextGenerationCoordinates.add(new CellCoordinates(2, 1));
+    nextGenerationCoordinates.add(new CellCoordinates(3, 2));
+    nextGenerationCoordinates.add(new CellCoordinates(1, 3));
+    nextGenerationCoordinates.add(new CellCoordinates(2, 3));
+    nextGenerationCoordinates.add(new CellCoordinates(3, 3));
+
+    assertGeneration(gol, nextGenerationCoordinates);
+  }
+
+  @Test
+  void nextGenerationGivesGenerationThreeOfGlider() {
+    GameOfLife gol = new GameOfLife(5, 5);
+    gol.seed(new Glider(0, 0));
+    gol.nextGeneration();
+    gol.nextGeneration();
+    gol.nextGeneration();
+
+    /*
+      x x x x x
+      x x x x x
+      x 0 x 0 x
+      x x 0 0 x
+      x x 0 x x
+    */
+    ArrayList<CellCoordinates> nextGenerationCoordinates = new ArrayList<CellCoordinates>();
+    nextGenerationCoordinates.add(new CellCoordinates(1, 2));
+    nextGenerationCoordinates.add(new CellCoordinates(3, 2));
+    nextGenerationCoordinates.add(new CellCoordinates(2, 3));
+    nextGenerationCoordinates.add(new CellCoordinates(3, 3));
+    nextGenerationCoordinates.add(new CellCoordinates(2, 4));
+
+    assertGeneration(gol, nextGenerationCoordinates);
+  }
+
+  @Test
+  void nextGenerationGivesGenerationFourOfGlider() {
+    GameOfLife gol = new GameOfLife(5, 5);
+    gol.seed(new Glider(0, 0));
+    gol.nextGeneration();
+    gol.nextGeneration();
+    gol.nextGeneration();
+    gol.nextGeneration();
+
+    /*
+      x x x x x
+      x x x x x
+      x x x 0 x
+      x 0 x 0 x
+      x x 0 0 x
+    */
+    ArrayList<CellCoordinates> nextGenerationCoordinates = new ArrayList<CellCoordinates>();
+    nextGenerationCoordinates.add(new CellCoordinates(3, 2));
+    nextGenerationCoordinates.add(new CellCoordinates(1, 3));
+    nextGenerationCoordinates.add(new CellCoordinates(3, 3));
+    nextGenerationCoordinates.add(new CellCoordinates(2, 4));
+    nextGenerationCoordinates.add(new CellCoordinates(3, 4));
+
+    assertGeneration(gol, nextGenerationCoordinates);
   }
 }
