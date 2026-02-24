@@ -1,11 +1,11 @@
 package gol;
 
-import gol.seed.Glider;
+import gol.seed.Wing;
 
 public class Main {
   public static void main(String[] args) {
-    GameOfLife gol = new GameOfLife(50, 30);
-    gol.seed(new Glider(0, 0));
+    GameOfLife gol = new GameOfLife(100, 50);
+    gol.seed(new Wing(25, 25));
     Printer printer = new Printer();
     while(true) {
       printer.print(gol);
